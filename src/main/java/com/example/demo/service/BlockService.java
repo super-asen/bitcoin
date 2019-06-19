@@ -7,4 +7,7 @@ import java.util.List;
 public interface BlockService {
     List<BlockIndexDto> getBlockIndex() throws Throwable;
 
+    List<BlockIndexDto> getRecentBlocks() throws  Throwable;
+
+
 }

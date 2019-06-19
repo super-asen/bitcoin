@@ -196,4 +196,19 @@
       timestamp = #{timestamp,jdbcType=TIMESTAMP}
     where blockhash = #{blockhash,jdbcType=CHAR}
   </update>
+
+
+
+<!--  custom-->
+
+  <select id="selectRecentBlocks" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from block
+    order by height desc
+    limit 5
+  </select>
+
+
+
 </mapper>

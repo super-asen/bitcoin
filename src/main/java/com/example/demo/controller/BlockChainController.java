@@ -4,9 +4,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.demo.api.BlockChainApi;
 import com.example.demo.dto.AddressDto;
 import com.example.demo.dto.BlockDetailDto;
+import com.example.demo.dto.BlockIndexDto;
 import com.example.demo.dto.TransactionSearchDto;
 import com.example.demo.mapper.BlockMapper;
 import com.example.demo.po.Block;
+import com.example.demo.po.BlockChain;
+import com.example.demo.service.BlockService;
 import com.example.demo.vo.TxDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -27,6 +31,9 @@ public class BlockChainController {
 
     @Autowired
     private BlockMapper blockMapper;
+
+    @Autowired
+    private BlockService blockService;
 
     @RequestMapping("/blockByHash/{blockChainId}/{blockHash}")
     public BlockDetailDto blockByHash(@PathVariable String blockHash,@PathVariable String blockChainId){
@@ -134,10 +141,15 @@ public class BlockChainController {
             blockMapper.insert(block);
             tempBlockHash=block.getNextBlockhash();
         }
-
-
-
-
-        return   null;
+     return   null;
     }
+
+
+
+    @GetMapping("/getRecentBlocks")
+    public List<BlockIndexDto> getRecentBlocks() throws Throwable{
+        List<BlockIndexDto> recentBlocks = blockService.getRecentBlocks();
+        return recentBlocks;
+    }
+
 }

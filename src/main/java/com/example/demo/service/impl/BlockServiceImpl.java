@@ -5,6 +5,7 @@ import com.example.demo.api.BlockChainApi;
 import com.example.demo.api.JsonRpcApi;
 import com.example.demo.dto.BlockIndexDto;
 import com.example.demo.mapper.BlockMapper;
+import com.example.demo.po.Block;
 import com.example.demo.service.BlockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,8 @@ public class BlockServiceImpl implements BlockService {
     @Autowired
     private JsonRpcApi jsonRpcApi;
 
+    @Autowired
+    private BlockMapper blockMapper;
 
 
     @Override
@@ -47,9 +50,23 @@ public class BlockServiceImpl implements BlockService {
         return blocks;
     }
 
+    @Override
+    public List<BlockIndexDto> getRecentBlocks() {
+        ArrayList<BlockIndexDto> blockIndexDtos = new ArrayList<>();
 
-
-
+        List<Block> blocks = blockMapper.selectRecentBlocks();
+        for (Block block : blocks) {
+            BlockIndexDto blockIndexDto = new BlockIndexDto();
+            blockIndexDto.setBlockhash(block.getBlockhash());
+            blockIndexDto.setHeight(block.getHeight());
+            blockIndexDto.setTime(block.getTime().getTime());
+            blockIndexDto.setTransactions(block.getTransactions());
+            blockIndexDto.setMiner(block.getMiner());
+            blockIndexDto.setSize(block.getSize());
+            blockIndexDtos.add(blockIndexDto);
+        }
+        return blockIndexDtos;
+    }
 
 
 }
