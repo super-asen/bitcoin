@@ -22,11 +22,12 @@ public class BitcoinController {
 
     @GetMapping("/test")
 
-    public String test(){
+    public String test() throws Throwable {
 
 
         String blockhash="0000000000001c7f07550db1ad91e7b32b06f12ad0cb6414f0c7efa5fe8244fb";
         bitcoinService.syncBlock(blockhash);
+
 
         return null;
     }

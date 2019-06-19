@@ -28,10 +28,32 @@ public class JsonRpcApiImpl implements JsonRpcApi {
     }
 
     @Override
+    public JSONObject getBlockchainInfo() throws Throwable {
+
+        JSONObject getblockchaininfo = jsonRpcHttpClient.invoke("getblockchaininfo", new Object[]{}, JSONObject.class);
+        return getblockchaininfo;
+    }
+
+    @Override
     public JSONObject getBlockByHash(String blockhash) throws Throwable {
         JSONObject getblock = jsonRpcHttpClient.invoke("getblock", new Object[]{blockhash}, JSONObject.class);
-
         return getblock;
+    }
+
+    @Override
+    public JSONObject getTransactionById(String txid) throws Throwable {
+
+        JSONObject getrawtransaction = jsonRpcHttpClient.invoke("getrawtransaction", new Object[]{txid, true}, JSONObject.class);
+
+        return getrawtransaction;
+    }
+
+    @Override
+    public String getBlockhashByHeight(Integer height) throws Throwable {
+
+        String getblockhash = jsonRpcHttpClient.invoke("getblockhash", new Object[]{height}, String.class);
+
+        return getblockhash;
     }
 
     @Override
