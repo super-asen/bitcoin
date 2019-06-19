@@ -1,13 +1,17 @@
 package com.example.demo.controller;
 
+import com.alibaba.fastjson.JSONObject;
+import com.example.demo.api.BlockChainApi;
 import com.example.demo.dto.AddressDto;
 import com.example.demo.dto.BlockDetailDto;
 import com.example.demo.dto.TransactionSearchDto;
+import com.example.demo.mapper.BlockMapper;
+import com.example.demo.po.Block;
 import com.example.demo.vo.TxDetail;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,7 +19,15 @@ import java.util.Date;
 @RestController
 @CrossOrigin
 @RequestMapping("/blockChain")
+@EnableAutoConfiguration
 public class BlockChainController {
+
+    @Autowired
+    private BlockChainApi blockChainApi;
+
+    @Autowired
+    private BlockMapper blockMapper;
+
     @RequestMapping("/blockByHash/{blockChainId}/{blockHash}")
     public BlockDetailDto blockByHash(@PathVariable String blockHash,@PathVariable String blockChainId){
         BlockDetailDto blockDetailDto = new BlockDetailDto();
@@ -98,5 +110,34 @@ public class BlockChainController {
         txDetails.add(txDetail2);
         transactionSearchDto.setTxdetails(txDetails);
         return transactionSearchDto;
+    }
+
+
+    @GetMapping("/test")
+    public String test(){
+        String tempBlockHash = "000000000933ea01ad0ee984209779baaec3ced90fa3f408719526f8d77f4943";
+
+        while (tempBlockHash!=null&&!tempBlockHash.isEmpty()){
+            JSONObject blockJson = blockChainApi.getBlocks(tempBlockHash);
+            Block block = new Block();
+            block.setBlockhash(blockJson.getString("hash"));
+            block.setBlockchainId(1);
+            block.setHeight(blockJson.getInteger("height"));
+            Long time = blockJson.getLong("time");
+            block.setTime(new Date(time*1000));
+            block.setTransactions(blockJson.getInteger("nTx"));
+            block.setSize(blockJson.getLong("size"));
+            block.setDifficulty(blockJson.getDouble("weight"));
+            block.setPrevBlockhash(blockJson.getString("previousblockhash"));
+            block.setNextBlockhash(blockJson.getString("nextblockhash"));
+            block.setMerkleRoot(blockJson.getString("merkleroot"));
+            blockMapper.insert(block);
+            tempBlockHash=block.getNextBlockhash();
+        }
+
+
+
+
+        return   null;
     }
 }

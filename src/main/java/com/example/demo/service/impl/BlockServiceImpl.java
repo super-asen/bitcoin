@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.demo.api.BlockChainApi;
 import com.example.demo.api.JsonRpcApi;
 import com.example.demo.dto.BlockIndexDto;
+import com.example.demo.mapper.BlockMapper;
 import com.example.demo.service.BlockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,8 @@ public class BlockServiceImpl implements BlockService {
 
     @Autowired
     private JsonRpcApi jsonRpcApi;
+
+
 
     @Override
     public List<BlockIndexDto> getBlockIndex() throws Throwable {
@@ -43,4 +46,10 @@ public class BlockServiceImpl implements BlockService {
         }
         return blocks;
     }
+
+
+
+
+
+
 }
