@@ -3,6 +3,8 @@ package com.example.demo.mapper;
 import com.example.demo.po.Transaction;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface TransactionMapper {
     int deleteByPrimaryKey(String txhash);
 
@@ -17,4 +19,7 @@ public interface TransactionMapper {
     int updateByPrimaryKey(Transaction record);
 
 
+
+
+    List<Transaction> selectByBlockHash(String blockhash);
 }

@@ -19,7 +19,7 @@ public class addressController {
     @GetMapping("/getBlance")
     public Double getBlance(@RequestParam String address){
         Double blance = transactionDetailMapper.getBlance(address);
-        return  blance;
+            return  blance;
 }
 
 

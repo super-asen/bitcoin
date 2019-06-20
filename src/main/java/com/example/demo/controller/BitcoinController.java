@@ -25,7 +25,7 @@ public class BitcoinController {
     public String test() throws Throwable {
 
 
-        String blockhash="0000000000001c7f07550db1ad91e7b32b06f12ad0cb6414f0c7efa5fe8244fb";
+        String blockhash="00000000000006f980320c0c7dde2a8dee5115fc75d9c38743062604cf883087";
         bitcoinService.syncBlock(blockhash);
 
 
