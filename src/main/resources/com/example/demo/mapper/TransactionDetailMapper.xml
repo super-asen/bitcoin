@@ -17,7 +17,8 @@
     from transaction_detail
     where tx_detail_id = #{txDetailId,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from transaction_detail
     where tx_detail_id = #{txDetailId,jdbcType=BIGINT}
   </delete>
@@ -90,4 +91,17 @@
       amount = #{amount,jdbcType=DOUBLE}
     where tx_detail_id = #{txDetailId,jdbcType=BIGINT}
   </update>
+
+
+
+
+<!--  consummer-->
+
+
+
+  <select id="getBlance" parameterType="java.lang.String"  resultType="java.lang.Double">
+
+    SELECT SUM(amount) FROM transaction_detail WHERE address=#{address};
+
+  </select>
 </mapper>

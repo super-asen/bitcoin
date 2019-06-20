@@ -1,6 +1,7 @@
 package com.example.demo.mapper;
 
 import com.example.demo.po.Transaction;
+import org.apache.ibatis.annotations.Param;
 
 public interface TransactionMapper {
     int deleteByPrimaryKey(String txhash);
@@ -14,4 +15,6 @@ public interface TransactionMapper {
     int updateByPrimaryKeySelective(Transaction record);
 
     int updateByPrimaryKey(Transaction record);
+
+
 }
