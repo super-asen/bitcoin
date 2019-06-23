@@ -196,33 +196,32 @@
       timestamp = #{timestamp,jdbcType=TIMESTAMP}
     where blockhash = #{blockhash,jdbcType=CHAR}
   </update>
-
-
-
-<!--  custom-->
-
-  <select id="selectRecentBlocks" resultMap="BaseResultMap">
+  <select id="selectByEnd" resultType="java.lang.Integer">
+    select height from block order by height desc limit 1
+  </select>
+<!--  getBlockIndex-->
+  <select id="getBlockIndex" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from block order by height desc limit 5
+  </select>
+<!--  selectByHeight-->
+  <select id="selectByHeight" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from block
-    order by height desc
-    limit 5
+    where height = #{height,jdbcType=INTEGER}
   </select>
-
-  <select id="blockHashGetAll" resultType="com.example.demo.dto.BlockListDto">
-
+    <select id="searchBlockByHash" resultType="com.example.demo.po.Block">
+      select
+      <include refid="Base_Column_List" />
+      from block
+      where blockhash = #{blockhash,jdbcType=CHAR} and blockchain_id = #{blockchainId,jdbcType=INTEGER}
+    </select>
+  <select id="searchBlockByHeight" resultType="com.example.demo.po.Block">
     select
     <include refid="Base_Column_List" />
-    from block where blockhash = #{blockhash}
+    from block
+    where height = #{height,jdbcType=INTEGER} and blockchain_id = #{blockchainId,jdbcType=INTEGER}
   </select>
-  <select id="getBlockIndex" resultType="com.example.demo.po.Block">
-
-    select
-    <include refid="Base_Column_List" />
-    from block limit 5
-
-
-  </select>
-
-
 </mapper>

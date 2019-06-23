@@ -17,15 +17,35 @@
     from transaction_detail
     where tx_detail_id = #{txDetailId,jdbcType=BIGINT}
   </select>
-
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <select id="selectByTxId" resultType="com.example.demo.po.TransactionDetail">
+      select
+      <include refid="Base_Column_List" />
+      from transaction_detail
+      where  txid = #{txid,jdbcType=CHAR}
+    </select>
+    <select id="getByAddress" resultType="com.example.demo.po.TransactionDetail">
+      select
+      <include refid="Base_Column_List" />
+      from transaction_detail
+      where address = #{address,jdbcType=VARCHAR}
+    </select>
+  <select id="getTotalReceived" resultType="java.lang.Double">
+    select sum(amount) from transaction_detail where type=1 and  address = #{address,jdbcType=VARCHAR}
+  </select>
+  <select id="getTxSize" resultType="java.lang.Integer">
+    select count(txid) from transaction_detail where address = #{address,jdbcType=VARCHAR}
+  </select>
+  <select id="getfinalBalance" resultType="java.lang.Double">
+    select sum(amount) from transaction_detail where address = #{address,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from transaction_detail
     where tx_detail_id = #{txDetailId,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.example.demo.po.TransactionDetail">
-    insert into transaction_detail (tx_detail_id, txid, address, 
+  <insert id="insert" parameterType="com.example.demo.po.TransactionDetail" keyProperty="txDetailId" useGeneratedKeys="true">
+    insert into transaction_detail ( txid, address,
       type, amount)
-    values (#{txDetailId,jdbcType=BIGINT}, #{txid,jdbcType=CHAR}, #{address,jdbcType=VARCHAR}, 
+    values (#{txid,jdbcType=CHAR}, #{address,jdbcType=VARCHAR},
       #{type,jdbcType=TINYINT}, #{amount,jdbcType=DOUBLE})
   </insert>
   <insert id="insertSelective" parameterType="com.example.demo.po.TransactionDetail">
@@ -91,17 +111,4 @@
       amount = #{amount,jdbcType=DOUBLE}
     where tx_detail_id = #{txDetailId,jdbcType=BIGINT}
   </update>
-
-
-
-
-<!--  consummer-->
-
-
-
-  <select id="getBlance" parameterType="java.lang.String"  resultType="java.lang.Double">
-
-    SELECT SUM(amount) FROM transaction_detail WHERE address=#{address};
-
-  </select>
 </mapper>

@@ -21,8 +21,17 @@
     from transaction
     where txhash = #{txhash,jdbcType=CHAR}
   </select>
-
-
+    <select id="selectByBlockHash" resultType="com.example.demo.po.Transaction">
+      select
+      <include refid="Base_Column_List" />
+      from transaction
+      where blockhash = #{blockhash,jdbcType=CHAR}
+    </select>
+    <select id="getTxIndex" resultType="com.example.demo.po.Transaction">
+      select
+      <include refid="Base_Column_List" />
+      from transaction order by rand() limit 5
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from transaction
     where txhash = #{txhash,jdbcType=CHAR}
@@ -140,18 +149,4 @@
       confirm = #{confirm,jdbcType=INTEGER}
     where txhash = #{txhash,jdbcType=CHAR}
   </update>
-
-<!--consummer-->
-
-
-  <select id="selectByBlockHash" resultType="com.example.demo.po.Transaction">
-
-    select
-    <include refid="Base_Column_List" />
-    from transaction
-    where blockhash = #{blockhash}
-
-  </select>
-
-
 </mapper>

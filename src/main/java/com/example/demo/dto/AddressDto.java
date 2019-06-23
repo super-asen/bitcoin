@@ -1,36 +1,25 @@
 package com.example.demo.dto;
 
-import com.example.demo.vo.TxDetail;
+import com.example.demo.vo.Txs;
 
-import java.util.Date;
 import java.util.List;
 
 public class AddressDto {
     private String address;
     private Double totalReceived;
     private Double finalBalance;
-    private String txhash;
-    private Integer noTxSize;
-    private Long time;
-    private Integer confirm;
+    private Integer txSize;
 
-    public Long getTime() {
-        return time;
+    private List<Txs> txs;
+
+    public List<Txs> getTxs() {
+        return txs;
     }
 
-    public void setTime(Long time) {
-        this.time = time;
+    public void setTxs(List<Txs> txs) {
+        this.txs = txs;
     }
 
-    public Integer getConfirm() {
-        return confirm;
-    }
-
-    public void setConfirm(Integer confirm) {
-        this.confirm = confirm;
-    }
-
-    private List<TxDetail> txdetails;
 
     public String getAddress() {
         return address;
@@ -56,27 +45,14 @@ public class AddressDto {
         this.finalBalance = finalBalance;
     }
 
-    public String getTxhash() {
-        return txhash;
+
+    public Integer getTxSize() {
+        return txSize;
     }
 
-    public void setTxhash(String txhash) {
-        this.txhash = txhash;
+    public void setTxSize(Integer txSize) {
+        this.txSize = txSize;
     }
 
-    public Integer getNoTxSize() {
-        return noTxSize;
-    }
 
-    public void setNoTxSize(Integer noTxSize) {
-        this.noTxSize = noTxSize;
-    }
-
-    public List<TxDetail> getTxdetails() {
-        return txdetails;
-    }
-
-    public void setTxdetails(List<TxDetail> txdetails) {
-        this.txdetails = txdetails;
-    }
 }

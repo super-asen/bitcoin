@@ -1,8 +1,6 @@
 package com.example.demo.enumeration;
 
-public enum  TxdetailType {
-
-    send,
+public enum  TransactionDetailType {
+    Send,
     Receive
-
 }
