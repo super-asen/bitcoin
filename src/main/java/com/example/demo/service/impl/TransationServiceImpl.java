@@ -68,7 +68,7 @@ public class TransationServiceImpl implements TransationService {
     }
 
     @Override
-    public TransactionSearchDto seaerchTransactionByTxhash(String txhash, Integer blockchainId) {
+    public TransactionSearchDto seaerchTransactionByTxhash(String txhash) {
         TransactionSearchDto transactionSearchDto = new TransactionSearchDto();
         Transaction transaction = transactionMapper.selectByPrimaryKey(txhash);
         if(transaction!=null){
@@ -84,7 +84,7 @@ public class TransationServiceImpl implements TransationService {
             Txs txs = blockService.getTxs(transaction);
             txs1.add(txs);
             transactionSearchDto.setTxs(txs1);
-            Block block = blockMapper.searchBlockByHash(transaction.getBlockhash(),blockchainId);
+            Block block = blockMapper.searchBlockByHash(transaction.getBlockhash());
             transactionSearchDto.setHeight(block.getHeight());
             return transactionSearchDto;
         }

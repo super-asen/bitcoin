@@ -1,6 +1,7 @@
 package com.example.demo.mapper;
 
 import com.example.demo.po.TransactionDetail;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public interface TransactionDetailMapper {
 
     List<TransactionDetail> selectByTxId(String txhash);
 
-    List<TransactionDetail> getByAddress(String address);
+    List<TransactionDetail> getByAddress(@Param("address") String address);
 
     double getTotalReceived(String address);
 

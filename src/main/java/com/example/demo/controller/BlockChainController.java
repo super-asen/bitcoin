@@ -1,155 +1,53 @@
 package com.example.demo.controller;
 
-import com.alibaba.fastjson.JSONObject;
-import com.example.demo.api.BlockChainApi;
 import com.example.demo.dto.AddressDto;
 import com.example.demo.dto.BlockDetailDto;
-import com.example.demo.dto.BlockIndexDto;
 import com.example.demo.dto.TransactionSearchDto;
-import com.example.demo.mapper.BlockMapper;
 import com.example.demo.po.Block;
-import com.example.demo.po.BlockChain;
 import com.example.demo.service.BlockService;
-import com.example.demo.vo.TxDetail;
+import com.example.demo.service.TransationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 @RestController
 @CrossOrigin
 @RequestMapping("/blockChain")
-@EnableAutoConfiguration
 public class BlockChainController {
-
-    @Autowired
-    private BlockChainApi blockChainApi;
-
-    @Autowired
-    private BlockMapper blockMapper;
-
     @Autowired
     private BlockService blockService;
+    @Autowired
+    private TransationService transationService;
 
-    @RequestMapping("/blockByHash/{blockChainId}/{blockHash}")
-    public BlockDetailDto blockByHash(@PathVariable String blockHash,@PathVariable String blockChainId){
-        BlockDetailDto blockDetailDto = new BlockDetailDto();
-        blockDetailDto.setTxhash("c2b30b0516135b0d0b9b646c3b3b9c66425e86bb1cee773e119eed56030967a6");
-        blockDetailDto.setBlockchainId(1);
-        blockDetailDto.setBlockhash("00000000000000000018a65ff0bbbc2a93493c693d052d65c6a8dcbb881f55fb");
-        blockDetailDto.setDifficulty((double)2);
-        blockDetailDto.setFees(0.8);
-        blockDetailDto.setHeight(580770);
-        blockDetailDto.setMerkleRoot("5207117cb3ef0635be556974a3c781e17905c0e2d4360aec212b5f6a1110e32b");
-        blockDetailDto.setMiner("SlushPoo1l");
-        blockDetailDto.setNextBlockhash("00000000000000000025c889729b9f97cb3fc683742601fd61c7e481a7e2c951");
-        blockDetailDto.setOutputTotal(1647.4593939);
-        blockDetailDto.setPrevBlockhash("00000000000000000006a0173f90d900aefe5f7bef705f7dbdabe9b7077e06dd");
-        blockDetailDto.setTime(new Date().getTime());
-        blockDetailDto.setTimestamp(new Date().getTime());
-        blockDetailDto.setTransactions(28671);
-        blockDetailDto.setSize((long)1225462);
-        blockDetailDto.setTxtime(new Date().getTime());
-        ArrayList<TxDetail> txDetails = new ArrayList<>();
-        TxDetail txDetail = new TxDetail();
-        txDetail.setAddress("1CK6KHY6MAg1vmRQ4PAafKYDrg1ejbH1cE ");
-        txDetail.setType((byte)2);
-        txDetail.setAmount((double)2);
-        txDetails.add(txDetail);
-        TxDetail txDetail2 = new TxDetail();
-        txDetail2.setAddress("1CK6KHY6MHgYvmRQ4PAafKYDrg1ejbH1cE ");
-        txDetail2.setType((byte)1);
-        txDetail2.setAmount((double)1);
-        txDetails.add(txDetail2);
-        blockDetailDto.setTxdetails(txDetails);
-        return blockDetailDto;
-    }
-    @RequestMapping("/blockByAddress/{blockChainId}/{Address}")
-    public AddressDto getAddress(@PathVariable String Address,@PathVariable String blockChainId){
-        AddressDto addressDto = new AddressDto();
-        addressDto.setAddress("1Ma2DrB78K7jmAwaomqZNRMCvgQrNjE2QC");
-        addressDto.setFinalBalance(0.0);
-        addressDto.setNoTxSize(107);
-        addressDto.setConfirm(11);
-        addressDto.setTime(new Date().getTime());
-        addressDto.setTotalReceived(0.65650635);
-        addressDto.setTxhash("12ba70fe122e4e17411100dc349692bf25eeb1222c837b85b93f5a2f358a6197");
-        ArrayList<TxDetail> txDetails = new ArrayList<>();
-        TxDetail txDetail = new TxDetail();
-        txDetail.setAddress("1CK6KHY6MAg1vmRQ4P1afKYDrg1ejbH1cE ");
-        txDetail.setType((byte)1);
-        txDetail.setAmount((double)3);
-        txDetails.add(txDetail);
-        TxDetail txDetail2 = new TxDetail();
-        txDetail2.setAddress("1CK6KHY6MHgY1mRQ4PAafKYDrg1ejbH1cE ");
-        txDetail2.setType((byte)2);
-        txDetail2.setAmount((double)1);
-        txDetails.add(txDetail2);
-        addressDto.setTxdetails(txDetails);
-        return addressDto;
-    }
-    @RequestMapping("/blockByTxhash/{blockChainId}/{Txhash}")
-    public TransactionSearchDto getTransaction(@PathVariable String Txhash, @PathVariable String blockChainId){
-        TransactionSearchDto transactionSearchDto = new TransactionSearchDto();
-        transactionSearchDto.setConfirm(11);
-        transactionSearchDto.setFees(0.1);
-        transactionSearchDto.setHeight(11111);
-        transactionSearchDto.setSize((long)192);
-        transactionSearchDto.setTime(new Date().getTime());
-        transactionSearchDto.setTotalInput(0.31008597);
-        transactionSearchDto.setTotalOutput(0.30992593);
-        transactionSearchDto.setTxhash("9cd08b5651ac3dd2xdc763f3bf718cd91325265416741dfd2b12b8e41cfdd0b1");
-        transactionSearchDto.setWeight(718);
-        ArrayList<TxDetail> txDetails = new ArrayList<>();
-        TxDetail txDetail = new TxDetail();
-        txDetail.setAddress("1CK6KHY6MHgYvmRQ1PAafKYDrg1ejbH1cE");
-        txDetail.setType((byte)2);
-        txDetail.setAmount((double)3);
-        txDetails.add(txDetail);
-        TxDetail txDetail2 = new TxDetail();
-        txDetail2.setAddress("1CK6KMY6MHgYvmQQ4PAafKYDrg1ejbH1cE");
-        txDetail2.setType((byte)1);
-        txDetail2.setAmount((double)2);
-        txDetails.add(txDetail2);
-        transactionSearchDto.setTxdetails(txDetails);
-        return transactionSearchDto;
-    }
-
-
-    @GetMapping("/test")
-    public String test(){
-        String tempBlockHash = "000000000933ea01ad0ee984209779baaec3ced90fa3f408719526f8d77f4943";
-
-        while (tempBlockHash!=null&&!tempBlockHash.isEmpty()){
-            JSONObject blockJson = blockChainApi.getBlocks(tempBlockHash);
-            Block block = new Block();
-            block.setBlockhash(blockJson.getString("hash"));
-            block.setBlockchainId(1);
-            block.setHeight(blockJson.getInteger("height"));
-            Long time = blockJson.getLong("time");
-            block.setTime(new Date(time*1000));
-            block.setTransactions(blockJson.getInteger("nTx"));
-            block.setSize(blockJson.getLong("size"));
-            block.setDifficulty(blockJson.getDouble("weight"));
-            block.setPrevBlockhash(blockJson.getString("previousblockhash"));
-            block.setNextBlockhash(blockJson.getString("nextblockhash"));
-            block.setMerkleRoot(blockJson.getString("merkleroot"));
-            blockMapper.insert(block);
-            tempBlockHash=block.getNextBlockhash();
+        @RequestMapping("/search")
+    public Object getSearch(@RequestParam(required = false,defaultValue = "")String  param){
+            if(param.length()==36){
+                AddressDto addressDto =transationService.getAddress(param);
+                if(addressDto!=null){
+                    return addressDto;
+                }
+            }
+         else{
+            String reg="^\\d+$";
+            if(param.matches(reg)){
+                Block block = blockService.searchBlockByHeight(Integer.parseInt(param));
+                if(block!=null){
+                    return block;
+                }
+            }else{
+                if(param.length()==64){
+                    BlockDetailDto blockDetailDto = blockService.searchBlockByHash(param);
+                    if(blockDetailDto!=null){
+                        return blockDetailDto;
+                    }else{
+                        TransactionSearchDto transactionSearchDto = transationService.seaerchTransactionByTxhash(param);
+                        if(transactionSearchDto!=null){
+                            return  transactionSearchDto;
+                        }
+                    }
+                }
+            }
         }
-     return   null;
+        return null;
     }
-
-
-
-    @GetMapping("/getRecentBlocks")
-    public List<BlockIndexDto> getRecentBlocks() throws Throwable{
-        List<BlockIndexDto> recentBlocks = blockService.getRecentBlocks();
-        return recentBlocks;
-    }
-
 }

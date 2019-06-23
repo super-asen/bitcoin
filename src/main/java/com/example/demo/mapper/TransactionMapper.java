@@ -1,6 +1,7 @@
 package com.example.demo.mapper;
 
 import com.example.demo.po.Transaction;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ public interface TransactionMapper {
 
     int insertSelective(Transaction record);
 
-    Transaction selectByPrimaryKey(String txhash);
+    Transaction selectByPrimaryKey(@Param("txhash") String txhash);
 
     int updateByPrimaryKeySelective(Transaction record);
 
