@@ -25,24 +25,24 @@ public class TransactionController {
         return transactionIndexDtos;
     }
 
-    @RequestMapping("/moreTx")
+    @GetMapping("/moreTx")
     public List<TransactionIndexDto> moreTx(){
         List<TransactionIndexDto> transactionIndexDtos = transationService.getMoreTx();
         return transactionIndexDtos;
     }
-    @RequestMapping("/txDeatil/{txhash}")
-    public TransactionGetDto txDeatil(@PathVariable String txhash){
+    @GetMapping("/txDeatil")
+    public TransactionGetDto txDeatil(@RequestParam String txhash){
         TransactionGetDto txDeatil = transationService.getTxDeatil(txhash);
         return txDeatil;
     }
 
-    @RequestMapping("/getAddress/{address}")
-    public AddressDto getAddress(@PathVariable String address){
+    @GetMapping("/getAddress")
+    public AddressDto getAddress(@RequestParam String address){
         AddressDto address1 = transationService.getAddress(address);
         return address1;
     }
 
-    @RequestMapping("/getRate")
+    @GetMapping("/getRate")
     public Double getRate(){
         JSONObject rate = exchangeRateApi.getRate();
         JSONObject usd = rate.getJSONObject("USD");

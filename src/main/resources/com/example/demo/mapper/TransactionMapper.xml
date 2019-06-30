@@ -26,8 +26,9 @@
       <include refid="Base_Column_List" />
       from transaction
       where blockhash = #{blockhash,jdbcType=CHAR}
+      limit 10
     </select>
-    <select id="getTxIndex" resultType="com.example.demo.po.Transaction">
+    <select id="getTxIndex" resultMap="BaseResultMap">
       select
       <include refid="Base_Column_List" />
       from transaction order by rand() limit 5
@@ -153,7 +154,7 @@
 
   <!--consummer-->
 
-  <select id="getMoreTx" resultType="com.example.demo.po.Transaction">
+  <select id="getMoreTx" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from transaction order by rand() limit 8

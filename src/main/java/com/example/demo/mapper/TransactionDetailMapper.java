@@ -23,9 +23,14 @@ public interface TransactionDetailMapper {
 
     List<TransactionDetail> getByAddress(@Param("address") String address);
 
-    double getTotalReceived(String address);
+    Double getTotalReceived(String address);
 
     Integer getTxSize(String address);
 
-    double getfinalBalance(String address);
+    Double getfinalBalance(String address);
+
+
+    Double getTxTotalOutput(String txid);
+
+    Double getTxTotalInput(String txid);
 }

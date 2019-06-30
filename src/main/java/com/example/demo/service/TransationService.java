@@ -16,11 +16,11 @@ public interface TransationService {
 
     AddressDto getAddress(String address);
 
-    double getTotalReceived(String address);
+    Double getTotalReceived(String address);
 
     Integer getTxSize(String address);
 
-    double getfinalBalance(String address);
+    Double getfinalBalance(String address);
 
     List<TransactionIndexDto> getMoreTx();
 }

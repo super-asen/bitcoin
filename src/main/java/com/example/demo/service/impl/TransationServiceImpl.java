@@ -94,11 +94,11 @@ public class TransationServiceImpl implements TransationService {
         if(transactionDetails!=null){
             AddressDto addressDto = new AddressDto();
             addressDto.setAddress(address);
-            double totalRecevied = getTotalReceived(address);
+            Double totalRecevied = getTotalReceived(address);
             addressDto.setTotalReceived(totalRecevied);
             Integer txSize = getTxSize(address);
             addressDto.setTxSize(txSize);
-            double finalBalance = getfinalBalance(address);
+            Double finalBalance = getfinalBalance(address);
             addressDto.setFinalBalance(finalBalance);
             ArrayList<Txs> txs = new ArrayList<>();
             for (TransactionDetail tx : transactionDetails) {
@@ -113,7 +113,7 @@ public class TransationServiceImpl implements TransationService {
     }
 
     @Override
-    public double getTotalReceived(String address) {
+    public Double getTotalReceived(String address) {
         return transactionDetailMapper.getTotalReceived(address);
     }
 
@@ -123,7 +123,7 @@ public class TransationServiceImpl implements TransationService {
     }
 
     @Override
-    public double getfinalBalance(String address) {
+    public Double getfinalBalance(String address) {
         return transactionDetailMapper.getfinalBalance(address);
     }
 
@@ -145,7 +145,7 @@ public class TransationServiceImpl implements TransationService {
             TransactionIndexDto transactionIndexDto = new TransactionIndexDto();
             transactionIndexDto.setTxhash(transaction.getTxhash());
             transactionIndexDto.setTotalOutput(transaction.getTotalOutput());
-                transactionIndexDto.setTime(transaction.getTime().getTime());
+            transactionIndexDto.setTime(transaction.getTime().getTime());
             transactionIndexDtos.add(transactionIndexDto);
         }
         return transactionIndexDtos;

@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -120,7 +121,7 @@ public class BlockServiceImpl implements BlockService {
     }
 
     private List<BlockIndexDto> getBlockIndexDto(List<Block> blocks) {
-        List<BlockIndexDto> blockIndexDtos = new ArrayList<>();
+        List<BlockIndexDto> blockIndexDtos = new LinkedList<>();
         for (Block block : blocks) {
             BlockIndexDto blockIndexDto = new BlockIndexDto();
             blockIndexDto.setTime(block.getTime().getTime());

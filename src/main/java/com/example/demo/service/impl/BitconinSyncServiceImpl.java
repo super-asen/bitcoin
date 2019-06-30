@@ -15,12 +15,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.LinkedHashMap;
-
+@Async
 @Service
 @EnableAutoConfiguration
 public class BitconinSyncServiceImpl implements BitconinSyncService {
@@ -61,7 +62,7 @@ public class BitconinSyncServiceImpl implements BitconinSyncService {
             String nextBlockhash = syncBlockData(tempHash);
             tempHash = nextBlockhash;
         }
-        logger.info("end sync block data");
+
     }
 
     @Override
@@ -111,13 +112,26 @@ public class BitconinSyncServiceImpl implements BitconinSyncService {
         String txid = txObject.getString("txid");
         transaction.setTxhash(txid);
         transaction.setWeight(txObject.getInteger("weight"));
-        //todo set totalinput
-        transaction.setTotalInput(null);
-        //todo set totaloutput
-        transaction.setTotalOutput(null);
-        transactionMapper.insert(transaction);
         syncTxDetail(txid,txObject);
+        //todo set totalinput
+        transaction.setTotalInput(getTxTotalInput(txid));
+        //todo set totaloutput
+        transaction.setTotalOutput(getTxTotalOutput(txid));
+        transactionMapper.insert(transaction);
+
     }
+
+    private Double getTxTotalOutput(String txid) {
+        Double totalInput=transactionDetailMapper.getTxTotalOutput(txid);
+        return totalInput;
+    }
+
+
+    private Double getTxTotalInput(String txid) {
+        Double totalInput=transactionDetailMapper.getTxTotalInput(txid);
+        return totalInput;
+    }
+
 
     @Override
     public void syncTxDetail(String txid, JSONObject txObject) {

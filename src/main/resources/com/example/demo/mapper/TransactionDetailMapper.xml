@@ -111,4 +111,13 @@
       amount = #{amount,jdbcType=DOUBLE}
     where tx_detail_id = #{txDetailId,jdbcType=BIGINT}
   </update>
+
+
+
+  <select id="getTxTotalInput" resultType="java.lang.Double">
+    select sum(amount) from transaction_detail where type= 0 and txid = #{txid,jdbcType=CHAR}
+  </select>
+  <select id="getTxTotalOutput" resultType="java.lang.Double">
+        select sum(amount) from transaction_detail where type= 1 and txid = #{txid,jdbcType=CHAR}
+  </select>
 </mapper>

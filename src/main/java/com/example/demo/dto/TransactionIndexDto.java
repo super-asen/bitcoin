@@ -1,7 +1,5 @@
 package com.example.demo.dto;
 
-import java.util.Date;
-
 public class TransactionIndexDto {
     private String txhash;
     private Long time;

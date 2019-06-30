@@ -25,17 +25,14 @@ public class BitcoinScheduled {
 
     @Scheduled(cron = "${bitcoin.sync.cron}")
     public void setScheduled(){
-        logger.info("the scheduled is start");
         bitconinSyncService.syncBlockChain("000000000000030d7d5d9c86cb604350170a946de104203aeaba033e98167c04");
     }
     @Scheduled(cron = "${bitcoin.txIndex.cron}")
     public void txIndex(){
-        logger.info("begin to send data {}",transationService.getTxIndex());
         simpMessagingTemplate.convertAndSend("/topic/txIndex",transationService.getTxIndex());
     }
     @Scheduled(cron = "${bitcoin.txMore.cron}")
     public void txMore(){
-        logger.info("begin to send data {}",transationService.getMoreTx());
         simpMessagingTemplate.convertAndSend("/topic/txMore",transationService.getMoreTx());
     }
 }
