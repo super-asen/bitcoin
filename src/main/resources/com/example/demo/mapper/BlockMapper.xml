@@ -224,4 +224,15 @@
     from block
     where height = #{height,jdbcType=INTEGER}
   </select>
+
+    <select id="getBlockList" resultType="com.example.demo.po.Block">
+      select
+      <include refid="Base_Column_List" />
+      from block where TO_DAYS(time) = TO_DAYS(#{nowDate})
+      <if test="day != null and day!=''">
+        + #{day}
+      </if>
+      order by time
+    </select>
+
 </mapper>

@@ -18,13 +18,13 @@ public class BlockChainController {
     private BlockService blockService;
     @Autowired
     private TransationService transationService;
-
-        @RequestMapping("/search")
+    @RequestMapping("/search")
     public Object getSearch(@RequestParam(required = false,defaultValue = "")String  param){
+            param = param.trim();
             if(param.length()==36){
                 AddressDto addressDto =transationService.getAddress(param);
                 if(addressDto!=null){
-                    return addressDto;
+                    return "AddressDetail.html?address="+addressDto.getAddress();
                 }
             }
          else{
@@ -32,17 +32,17 @@ public class BlockChainController {
             if(param.matches(reg)){
                 Block block = blockService.searchBlockByHeight(Integer.parseInt(param));
                 if(block!=null){
-                    return block;
+                    return "BlockByHeight.html?height="+block.getHeight();
                 }
             }else{
                 if(param.length()==64){
                     BlockDetailDto blockDetailDto = blockService.searchBlockByHash(param);
                     if(blockDetailDto!=null){
-                        return blockDetailDto;
+                        return "BlockByHash.html?blockhash="+blockDetailDto.getBlockhash();
                     }else{
-                        TransactionSearchDto transactionSearchDto = transationService.seaerchTransactionByTxhash(param);
-                        if(transactionSearchDto!=null){
-                            return  transactionSearchDto;
+                        TransactionSearchDto transactionGetDto = transationService.seaerchTransactionByTxhash(param);
+                        if(transactionGetDto!=null){
+                            return  "TransationByHash.html?txhash="+transactionGetDto.getTxhash();
                         }
                     }
                 }

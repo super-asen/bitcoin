@@ -11,7 +11,7 @@ import java.util.List;
 public interface BlockService {
     List<BlockIndexDto> getBlockIndex() throws Throwable;
 
-    Block getBlockByHeight(Integer height);
+    BlockDetailDto getBlockByHeight(Integer height);
 
     BlockDetailDto getBlockByHash(String blockhash);
 
@@ -22,4 +22,6 @@ public interface BlockService {
     BlockDetailDto searchBlockByHash(String blockhash);
 
     Block searchBlockByHeight(int height);
+
+    List<BlockIndexDto> blockList(String nowDate, Integer day);
 }

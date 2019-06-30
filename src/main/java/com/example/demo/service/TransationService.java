@@ -21,4 +21,6 @@ public interface TransationService {
     Integer getTxSize(String address);
 
     double getfinalBalance(String address);
+
+    List<TransactionIndexDto> getMoreTx();
 }

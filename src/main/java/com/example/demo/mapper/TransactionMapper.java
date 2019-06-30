@@ -23,4 +23,5 @@ public interface TransactionMapper {
 
     List<Transaction> getTxIndex();
 
+    List<Transaction> getMoreTx();
 }

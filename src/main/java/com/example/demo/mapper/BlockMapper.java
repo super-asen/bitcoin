@@ -29,4 +29,9 @@ public interface BlockMapper {
     Block searchBlockByHash(@Param("blockhash") String blockhash);
 
     Block searchBlockByHeight(int height);
+
+    List<Block> getBlockList(String nowDate, Integer day);
+
+
+
 }

@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -36,16 +37,12 @@ public class TransationServiceImpl implements TransationService {
 
     @Override
     public List<TransactionIndexDto> getTxIndex() {
-        ArrayList<TransactionIndexDto> transactionIndexDtos = new ArrayList<>();
         List<Transaction>  transactions = transactionMapper.getTxIndex();
-        for (Transaction transaction : transactions) {
-            TransactionIndexDto transactionIndexDto = new TransactionIndexDto();
-            transactionIndexDto.setTxhash(transaction.getTxhash());
-            transactionIndexDto.setTotalOutput(transaction.getTotalOutput());
-            transactionIndexDto.setTime(transaction.getTime().getTime());
-            transactionIndexDtos.add(transactionIndexDto);
+        if(transactions!=null){
+            List<TransactionIndexDto> transationIndexDto = getTransationIndexDto(transactions);
+            return transationIndexDto;
         }
-        return transactionIndexDtos;
+        return null;
     }
 
     @Override
@@ -128,5 +125,29 @@ public class TransationServiceImpl implements TransationService {
     @Override
     public double getfinalBalance(String address) {
         return transactionDetailMapper.getfinalBalance(address);
+    }
+
+    @Override
+    public List<TransactionIndexDto> getMoreTx() {
+        List<Transaction>  transactions = transactionMapper.getMoreTx();
+        if(transactions!=null){
+            List<TransactionIndexDto> transationIndexDto = getTransationIndexDto(transactions);
+            return transationIndexDto;
+        }
+        return null;
+       
+    }
+
+    private List<TransactionIndexDto> getTransationIndexDto(List<Transaction> transactions) {
+
+        List<TransactionIndexDto> transactionIndexDtos = new LinkedList<>();
+        for (Transaction transaction : transactions) {
+            TransactionIndexDto transactionIndexDto = new TransactionIndexDto();
+            transactionIndexDto.setTxhash(transaction.getTxhash());
+            transactionIndexDto.setTotalOutput(transaction.getTotalOutput());
+                transactionIndexDto.setTime(transaction.getTime().getTime());
+            transactionIndexDtos.add(transactionIndexDto);
+        }
+        return transactionIndexDtos;
     }
 }

@@ -30,24 +30,15 @@ public class BlockServiceImpl implements BlockService {
     @Override
     public List<BlockIndexDto> getBlockIndex() throws Throwable {
         List<Block> blocks = blockMapper.getBlockIndex();
-        List<BlockIndexDto> blockIndexDtos = new ArrayList<>();
-        for (Block block : blocks) {
-            BlockIndexDto blockIndexDto = new BlockIndexDto();
-            blockIndexDto.setTime(block.getTime().getTime());
-            blockIndexDto.setMiner(block.getMiner());
-            blockIndexDto.setBlockhash(block.getBlockhash());
-            blockIndexDto.setHeight(block.getHeight());
-            blockIndexDto.setTransactions(block.getTransactions());
-            blockIndexDto.setSize(block.getSize());
-            blockIndexDtos.add(blockIndexDto);
-        }
-        return blockIndexDtos;
+        List<BlockIndexDto> blockIndexDto = getBlockIndexDto(blocks);
+        return blockIndexDto;
     }
 
     @Override
-    public Block getBlockByHeight(Integer height) {
+    public BlockDetailDto getBlockByHeight(Integer height) {
         Block block = blockMapper.selectByHeight(height);
-        return block;
+        BlockDetailDto blockDetailDto = getBlockDetail(block);
+        return blockDetailDto;
     }
 
     @Override
@@ -117,5 +108,29 @@ public class BlockServiceImpl implements BlockService {
     @Override
     public Block searchBlockByHeight(int height) {
         return blockMapper.searchBlockByHeight(height);
+    }
+
+    @Override
+    public List<BlockIndexDto> blockList(String nowDate, Integer day) {
+
+        List<Block> blocks = blockMapper.getBlockList(nowDate, day);
+        List<BlockIndexDto> blockIndexDto = getBlockIndexDto(blocks);
+        return blockIndexDto;
+
+    }
+
+    private List<BlockIndexDto> getBlockIndexDto(List<Block> blocks) {
+        List<BlockIndexDto> blockIndexDtos = new ArrayList<>();
+        for (Block block : blocks) {
+            BlockIndexDto blockIndexDto = new BlockIndexDto();
+            blockIndexDto.setTime(block.getTime().getTime());
+            blockIndexDto.setMiner(block.getMiner());
+            blockIndexDto.setBlockhash(block.getBlockhash());
+            blockIndexDto.setHeight(block.getHeight());
+            blockIndexDto.setTransactions(block.getTransactions());
+            blockIndexDto.setSize(block.getSize());
+            blockIndexDtos.add(blockIndexDto);
+        }
+        return blockIndexDtos;
     }
 }
