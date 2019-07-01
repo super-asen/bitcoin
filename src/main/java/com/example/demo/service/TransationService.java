@@ -12,7 +12,7 @@ public interface TransationService {
 
     TransactionGetDto getTxDeatil(String txhash);
 
-    TransactionGetDto seaerchTransactionByTxhash(String txhash);
+    TransactionSearchDto seaerchTransactionByTxhash(String txhash);
 
     AddressDto getAddress(String address);
 
